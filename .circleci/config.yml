@@ -5,9 +5,7 @@ orbs:
 
 jobs:
   build:
-    resource_class: shadabcircle_ci/circleci_shadab  # Use your self-hosted runner here
-    docker:
-      - image: circleci/python:3.9  # Use a specific Python version
+    resource_class: shadabcircle_ci/circleci_shadab  # Specify your self-hosted runner here
     steps:
       - checkout
       - run:
