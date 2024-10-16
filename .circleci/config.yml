@@ -2,6 +2,8 @@ version: 2.1
 
 jobs:
   build:
+    docker:
+      - image: circleci/python:3.9  # Use a Python Docker image
     resource_class: shadabcircle_ci/circleci_shadab  # Specify your self-hosted runner
     steps:
       - checkout
