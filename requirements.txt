@@ -1,0 +1,2 @@
+pytest
+pytest-xdist  # For running tests in parallel
