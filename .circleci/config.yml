@@ -5,8 +5,8 @@ orbs:
 
 jobs:
   build:
-    executor:
-      name: python/default
+    docker:
+      - image: circleci/python:3.9  # Use a specific Python version
     steps:
       - checkout
       - python/install-packages:
@@ -15,10 +15,21 @@ jobs:
             - requirements.txt
       - run:
           name: Run Tests in Parallel
-          command: pytest -n auto tests/
+          command: pytest -n auto tests/ --junitxml=test-results.xml  # Generate test report in JUnit format
+      - run:
+          name: Archive Test Results
+          command: mkdir -p test-results
+      - store_artifacts:
+          path: test-results/test-results.xml
+          destination: test-results
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: main  # Adjust according to your branch
+          resource_class: large  # Optional: specify a resource class if needed
+          runner: shadabcircle_ci/circleci_shadab  # Use your self-hosted runner
