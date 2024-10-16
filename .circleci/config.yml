@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@2.1.0  # Use the latest stable version available
+  python: circleci/python@2.1.0  # Use a valid version
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
           name: Run Tests in Parallel
           command: pytest -n auto tests/ --junitxml=test-results.xml  # Generate test report in JUnit format
       - run:
-          name: Archive Test Results
+          name: Create Test Results Directory
           command: mkdir -p test-results
       - store_artifacts:
           path: test-results/test-results.xml
@@ -31,5 +31,3 @@ workflows:
           filters:
             branches:
               only: main  # Adjust according to your branch
-          resource_class: large  # Optional: specify a resource class if needed
-          runner: shadabcircle_ci/circleci_shadab  # Use your self-hosted runner
