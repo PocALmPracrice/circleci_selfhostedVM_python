@@ -5,14 +5,16 @@ orbs:
 
 jobs:
   build:
+    resource_class: shadabcircle_ci/circleci_shadab  # Use your self-hosted runner here
     docker:
       - image: circleci/python:3.9  # Use a specific Python version
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
-          packages: 
-            - requirements.txt
+      - run:
+          name: Install Dependencies
+          command: |
+            python -m pip install --upgrade pip  # Upgrade pip
+            pip install -r requirements.txt      # Install dependencies from requirements.txt
       - run:
           name: Run Tests in Parallel
           command: pytest -n auto tests/ --junitxml=test-results.xml  # Generate test report in JUnit format
